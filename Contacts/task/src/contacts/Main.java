@@ -45,6 +45,12 @@ public class Main {
         }
     }
 
+    private static boolean validatePhoneNumber(String number){
+        Pattern phoneNumberPattern = Pattern.compile("");
+        Matcher phoneNumberMatcher = phoneNumberPattern.matcher(number);
+        return phoneNumberMatcher.matches();
+    }
+
     private static void add(){
         System.out.println("Enter the name: ");
         String nameInput = scanner.nextLine().toLowerCase().trim();
@@ -53,10 +59,7 @@ public class Main {
         System.out.println("Enter the number: ");
         String numberInput = scanner.nextLine().toLowerCase().trim();
 
-        Pattern phoneNumberPattern = Pattern.compile("");
-        Matcher phoneNumberMatcher = phoneNumberPattern.matcher(numberInput);
-
-        if (!phoneNumberMatcher.matches()){
+        if (!validatePhoneNumber(numberInput)){
             numberInput = "[no number]";
             System.out.println("Wrong number format!");
         }
@@ -71,27 +74,68 @@ public class Main {
     }
 
     private static void remove(){
+        if (pb.contacts.size() == 0){
+            System.out.println("No records to remove!");
+            return;
+        }
         list();
         System.out.println("Select a record: ");
         String indexInput = scanner.nextLine().trim();
-        int index;
         try{
-            index = Integer.parseInt(indexInput) - 1;
-        }catch(NumberFormatException e){
-            System.out.println("Invalid index!");
-            return;
-        }
-
-        try{
+            int index = Integer.parseInt(indexInput) - 1;
             pb.removeRecord(index);
             System.out.println("The record removed!");
-        } catch(ArrayIndexOutOfBoundsException e){
+        }catch(NumberFormatException e){
             System.out.println("Invalid index!");
         }
     }
 
     private static void edit(){
+        if (pb.contacts.size() == 0){
+            System.out.println("No records to edit!");
+            return;
+        }
+        list();
+        System.out.println("Select a record: ");
+        String indexInput = scanner.nextLine().trim();
+        Record recordToEdit;
+        try{
+            int index = Integer.parseInt(indexInput) - 1;
+            recordToEdit = pb.getRecord(index);
+        }catch(Exception e){
+            System.out.println("Invalid index!");
+            return;
+        }
 
+        System.out.println("Select a field (name, surname, number): ");
+        String fieldInput = scanner.nextLine().trim();
+        switch (fieldInput){
+            case "name":
+                System.out.println("Enter name: ");
+                String nameInput = scanner.nextLine().trim();
+                recordToEdit.setSurname(nameInput);
+                System.out.println("The record updated!");
+                break;
+            case "surname":
+                System.out.println("Enter surname: ");
+                String surnameInput = scanner.nextLine().trim();
+                recordToEdit.setSurname(surnameInput);
+                System.out.println("The record updated!");
+                break;
+            case "number":
+                System.out.println("Enter number: ");
+                String numberInput = scanner.nextLine().trim();
+                if (validatePhoneNumber(numberInput)){
+                    recordToEdit.setPhoneNumber(numberInput);
+                    System.out.println("The record updated!");
+                }else{
+                    System.out.println("Wrong number format!");
+                }
+                break;
+            default:
+                System.out.println("Invalid Field!");
+                break;
+        }
     }
 
     private static void count(){
