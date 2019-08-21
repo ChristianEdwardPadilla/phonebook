@@ -1,7 +1,6 @@
 package contacts;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -148,33 +147,33 @@ public class Main {
 }
 
 class PhoneBook{
-    public ArrayList<Record> contacts;
+    ArrayList<Record> contacts;
 
-    public PhoneBook() {
+    PhoneBook() {
         this.contacts = new ArrayList<Record>();
     }
 
-    public PhoneBook(ArrayList<Record> records) {
+    PhoneBook(ArrayList<Record> records) {
         this.contacts = records;
     }
 
-    public void addRecord(Record newRecord){
+    void addRecord(Record newRecord){
         contacts.add(newRecord);
     }
 
-    public void removeRecord(int index) {
+    void removeRecord(int index) {
         contacts.remove(index);
     }
 
-    public Record getRecord(int index){
+    Record getRecord(int index){
         return contacts.get(index);
     }
 
-    public ArrayList<Record> getContacts() {
+    ArrayList<Record> getContacts() {
         return contacts;
     }
 
-    public void printRecords(){
+    void printRecords(){
         int count = 1;
         for (Record r : contacts){
             System.out.println(String.format("%d. %s %s, %s", count, r.name,r.surname, r.phoneNumber));
@@ -187,29 +186,29 @@ class Record{
     String surname;
     String phoneNumber;
 
-    public Record(String name, String surname, String phoneNumber) {
+    Record(String name, String surname, String phoneNumber) {
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
     }
 
     // getters and setters
-    public String getName() {
+    String getName() {
         return name;
     }
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
-    public String getSurname() {
+    String getSurname() {
         return surname;
     }
-    public void setSurname(String surname) {
+    void setSurname(String surname) {
         this.surname = surname;
     }
-    public String getPhoneNumber() {
+    String getPhoneNumber() {
         return phoneNumber;
     }
-    public void setPhoneNumber(String phoneNumber) {
+    void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 }
