@@ -100,7 +100,7 @@ public class ContactsTest extends BaseStageTest<TestClue> {
                     }
                     return CheckResult.TRUE;
                 })),
-
+            //6
             new TestCase<TestClue>()
                 .setInput(
                     "add\n" +

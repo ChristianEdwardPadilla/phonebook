@@ -16,10 +16,13 @@ public class Main {
         String input = scanner.nextLine().toLowerCase().trim();
 
         while (!"exit".equals(input)){
-            System.out.println(input);
             handleInput(input);
             System.out.println("Enter action (add, remove, edit, count, info, exit):");
             input = scanner.nextLine().toLowerCase().trim();
+            System.out.println(input);
+//            if ("".equals(input) || "\n".equals(input)){
+//                input = scanner.nextLine().toLowerCase().trim();
+//            }
         }
     }
 
@@ -50,7 +53,6 @@ public class Main {
     }
 
     private static boolean validatePhoneNumber(String number){
-        // [a-zA-Z\d]
         Pattern phoneNumberPattern = Pattern.compile("\\+?\\([a-zA-Z\\d]{2,}\\)([\\s-][a-zA-Z\\d]{2,})*|\\+?[a-zA-Z\\d]{2,}[\\s-]\\([a-zA-Z\\d]{2,}\\)([\\s-][a-zA-Z\\d]{2,})*|\\+?([a-zA-Z\\d]{2,}[\\s-]?)+([a-zA-Z\\d]{2,}[\\s-])*");
         Matcher phoneNumberMatcher = phoneNumberPattern.matcher(number);
         return phoneNumberMatcher.matches();
@@ -163,10 +165,11 @@ public class Main {
         }
         list();
         System.out.println("Select a record: ");
-        int indexInput = scanner.nextInt();
+        String indexInput = scanner.nextLine();
+        int index;
         Record recordToEdit;
         try{
-            int index = indexInput - 1;
+            index = Integer.parseInt(indexInput) - 1;
             recordToEdit = pb.getRecord(index);
         }catch(Exception e){
             System.out.println("Invalid index!");
@@ -288,29 +291,33 @@ public class Main {
     private static void info() {
         list();
         System.out.println("Enter index to show info: ");
-        int indexInput = scanner.nextInt();
+        String indexInput = scanner.nextLine();
+        int index;
+        Record recordToList;
         try{
-            int index = indexInput - 1;
-            Record recordToList = pb.getRecord(index);
-            if (recordToList.getClass() == PersonRecord.class){
-                PersonRecord localRecord = (PersonRecord) recordToList;
-                System.out.println("Name: " + localRecord.getName());
-                System.out.println("Surname: " + localRecord.getSurname());
-                System.out.println("Birth date: " + localRecord.getBirthdate());
-                System.out.println("Gender: " + localRecord.getGender());
-                System.out.println("Number: " + localRecord.getPhoneNumber());
-                System.out.println("Time created: " + localRecord.getCreated());
-                System.out.println("Time last edit: " + localRecord.getMostRecentEdit());
-            }else if (recordToList.getClass() == OrganizationRecord.class){
-                OrganizationRecord localRecord = (OrganizationRecord) recordToList;
-                System.out.println("Organization name: " + localRecord.getName());
-                System.out.println("Address: " + localRecord.getAddress());
-                System.out.println("Number: " + localRecord.getPhoneNumber());
-                System.out.println("Time created: " + localRecord.getCreated());
-                System.out.println("Time last edit: " + localRecord.getMostRecentEdit());
-            }
+            index = Integer.parseInt(indexInput) - 1;
+            recordToList = pb.getRecord(index);
         }catch(Exception e){
             System.out.println("Invalid index!");
+            return;
+        }
+        Class recordClass = recordToList.getClass();
+        if (recordClass == PersonRecord.class){
+            PersonRecord localRecord = (PersonRecord) recordToList;
+            System.out.println("Name: " + localRecord.getName());
+            System.out.println("Surname: " + localRecord.getSurname());
+            System.out.println("Birth date: " + localRecord.getBirthdate());
+            System.out.println("Gender: " + localRecord.getGender());
+            System.out.println("Number: " + localRecord.getPhoneNumber());
+            System.out.println("Time created: " + localRecord.getCreated().trim());
+            System.out.println("Time last edit: " + localRecord.getMostRecentEdit().trim());
+        }else if (recordClass == OrganizationRecord.class){
+            OrganizationRecord localRecord = (OrganizationRecord) recordToList;
+            System.out.println("Organization name: " + localRecord.getName());
+            System.out.println("Address: " + localRecord.getAddress());
+            System.out.println("Number: " + localRecord.getPhoneNumber());
+            System.out.println("Time created: " + localRecord.getCreated().trim());
+            System.out.println("Time last edit: " + localRecord.getMostRecentEdit().trim());
         }
     }
 }
@@ -359,6 +366,7 @@ class Record{
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.created = LocalDateTime.now().toString();
+        this.mostRecentEdit = LocalDateTime.now().toString();
     }
 
     // getters and setters
