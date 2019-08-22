@@ -70,7 +70,6 @@ public class Main {
                 break;
             default:
                 System.out.println("invalid record type");
-                return;
         }
     }
 
@@ -94,7 +93,6 @@ public class Main {
         String genderInput = scanner.nextLine().trim().toUpperCase();
         switch (genderInput){
             case "M":
-                break;
             case "F":
                 break;
             default:
@@ -111,7 +109,6 @@ public class Main {
         }
 
         Record newRecord = new PersonRecord(nameInput, numberInput, surnameInput, genderInput, birthDateInput);
-
         try{
             pb.addRecord(newRecord);
             System.out.println("The record added.");
@@ -134,6 +131,12 @@ public class Main {
         }
 
         Record newRecord = new OrganizationRecord(nameInput, numberInput, addressInput);
+        try{
+            pb.addRecord(newRecord);
+            System.out.println("The record added.");
+        }catch(Exception e){
+            System.out.println("Failed to add record.");
+        }
     }
 
     private static void remove(){
@@ -212,7 +215,6 @@ public class Main {
                 String genderInput = scanner.nextLine().trim().toUpperCase();
                 switch (genderInput){
                     case "M":
-                        break;
                     case "F":
                         break;
                     default:
@@ -309,7 +311,6 @@ public class Main {
             }
         }catch(Exception e){
             System.out.println("Invalid index!");
-            return;
         }
     }
 }
@@ -319,10 +320,6 @@ class PhoneBook{
 
     PhoneBook() {
         this.contacts = new ArrayList<>();
-    }
-
-    PhoneBook(ArrayList<Record> records) {
-        this.contacts = records;
     }
 
     void addRecord(Record newRecord){
@@ -335,10 +332,6 @@ class PhoneBook{
 
     Record getRecord(int index){
         return contacts.get(index);
-    }
-
-    ArrayList<Record> getContacts() {
-        return contacts;
     }
 
     void printRecords(){
@@ -357,10 +350,10 @@ class PhoneBook{
 }
 
 class Record{
-    String name;
-    String phoneNumber;
-    String created;
-    String mostRecentEdit;
+    private String name;
+    private String phoneNumber;
+    private String created;
+    private String mostRecentEdit;
 
     Record(String name, String phoneNumber) {
         this.name = name;
@@ -384,23 +377,23 @@ class Record{
         this.mostRecentEdit = LocalDateTime.now().toString();
     }
 
-    public String getCreated() {
+    String getCreated() {
         return created;
     }
 
-    public String getMostRecentEdit() {
+    String getMostRecentEdit() {
         return mostRecentEdit;
     }
 
-    public void setMostRecentEdit(LocalDateTime mostRecentEdit) {
-        this.mostRecentEdit = mostRecentEdit.toString();
+    void setMostRecentEdit(String mostRecentEdit) {
+        this.mostRecentEdit = mostRecentEdit;
     }
 }
 
 class PersonRecord extends Record {
-    String surname;
-    String gender;
-    String birthdate;
+    private String surname;
+    private String gender;
+    private String birthdate;
 
     PersonRecord(String name, String phoneNumber, String surname, String gender, String birthdate){
         super(name, phoneNumber);
@@ -409,50 +402,49 @@ class PersonRecord extends Record {
         this.birthdate = birthdate;
     }
 
-    public String getSurname() {
+    String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname) {
+    void setSurname(String surname) {
         this.surname = surname;
-        this.mostRecentEdit = LocalDateTime.now().toString();
+        setMostRecentEdit(LocalDateTime.now().toString());
     }
 
-    public String getGender() {
+    String getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    void setGender(String gender) {
         this.gender = gender;
-        this.mostRecentEdit = LocalDateTime.now().toString();
-
+        setMostRecentEdit(LocalDateTime.now().toString());
     }
 
-    public String getBirthdate() {
+    String getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(String birthdate) {
+    void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
-        this.mostRecentEdit = LocalDateTime.now().toString();
+        setMostRecentEdit(LocalDateTime.now().toString());
     }
 }
 
 class OrganizationRecord extends Record {
-    String address;
+    private String address;
 
     OrganizationRecord(String name, String phoneNumber, String address){
         super(name, phoneNumber);
         this.address = address;
     }
 
-    public String getAddress() {
+    String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    void setAddress(String address) {
         this.address = address;
-        this.mostRecentEdit = LocalDateTime.now().toString();
+        setMostRecentEdit(LocalDateTime.now().toString());
     }
 }
 
