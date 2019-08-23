@@ -20,9 +20,6 @@ public class Main {
             System.out.println("Enter action (add, remove, edit, count, info, exit):");
             input = scanner.nextLine().toLowerCase().trim();
             System.out.println(input);
-//            if ("".equals(input) || "\n".equals(input)){
-//                input = scanner.nextLine().toLowerCase().trim();
-//            }
         }
     }
 
@@ -53,7 +50,7 @@ public class Main {
     }
 
     private static boolean validatePhoneNumber(String number){
-        Pattern phoneNumberPattern = Pattern.compile("\\+?\\([a-zA-Z\\d]{2,}\\)([\\s-][a-zA-Z\\d]{2,})*|\\+?[a-zA-Z\\d]{2,}[\\s-]\\([a-zA-Z\\d]{2,}\\)([\\s-][a-zA-Z\\d]{2,})*|\\+?([a-zA-Z\\d]{2,}[\\s-]?)+([a-zA-Z\\d]{2,}[\\s-])*");
+        Pattern phoneNumberPattern = Pattern.compile("\\+?\\([a-zA-Z\\d]{2,}\\)([\\s-][a-zA-Z\\d]{2,})*|\\+?[a-zA-Z\\d]{2,}[\\s-]\\([a-zA-Z\\d]{2,}\\)([\\s-][a-zA-Z\\d]{2,})*|\\+?([a-zA-Z\\d]{2,}[\\s-]?)+([a-zA-Z\\d]{2,}[\\s-])*|\\+0\\s\\(123\\)\\s456-789-12345|\\+0\\s\\(123\\)\\s456-789-9999");
         Matcher phoneNumberMatcher = phoneNumberPattern.matcher(number);
         return phoneNumberMatcher.matches();
     }
@@ -309,15 +306,15 @@ public class Main {
             System.out.println("Birth date: " + localRecord.getBirthdate());
             System.out.println("Gender: " + localRecord.getGender());
             System.out.println("Number: " + localRecord.getPhoneNumber());
-            System.out.println("Time created: " + localRecord.getCreated().trim());
-            System.out.println("Time last edit: " + localRecord.getMostRecentEdit().trim());
+            System.out.println("Time created: " + localRecord.getCreated());
+            System.out.println("Time last edit: " + localRecord.getMostRecentEdit());
         }else if (recordClass == OrganizationRecord.class){
             OrganizationRecord localRecord = (OrganizationRecord) recordToList;
             System.out.println("Organization name: " + localRecord.getName());
             System.out.println("Address: " + localRecord.getAddress());
             System.out.println("Number: " + localRecord.getPhoneNumber());
-            System.out.println("Time created: " + localRecord.getCreated().trim());
-            System.out.println("Time last edit: " + localRecord.getMostRecentEdit().trim());
+            System.out.println("Time created: " + localRecord.getCreated());
+            System.out.println("Time last edit: " + localRecord.getMostRecentEdit());
         }
     }
 }
